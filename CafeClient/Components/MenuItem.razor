@@ -1,0 +1,23 @@
+﻿@using CafeClient.Data
+@inject CartState cartState
+
+<link href="css/index.css" rel="stylesheet" />
+
+<div class="card border-dark text-center" style="width: 18rem;">
+    <img src="@Product.ImageUrl" alt="@Product.Title" class="card-img-top img-thumbnail img-fluid" />
+    <div class="card-body">
+        <h5 class="card-title">@Product.Title</h5>
+        <button class="btn btn-primary" @onclick="AddToCart">Add to Cart</button>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public Item Product { get; set; }
+
+    private void AddToCart()
+    {
+        cartState.Items.Add(Product);
+    }
+}
