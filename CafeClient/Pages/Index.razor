@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using CafeClient.Components
+@using CafeClient.Models
 @using CafeClient.Services
 @inject MenuService _menuService
 
@@ -19,9 +20,10 @@
 
 @code {
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        items = await _menuService.GetMenuItems();
+        items = _menuService.GetMenuItems();
+        base.OnInitialized();
     }
 
     private List<Item> items = new List<Item>();
