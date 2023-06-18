@@ -1,0 +1,47 @@
+﻿@page "/cart"
+@using CafeCommon.Models
+@using CafeClient.Services
+@inject CartService cartService
+@inject NavigationManager navigationManager;
+
+<PageTitle>Cart</PageTitle>
+<form>
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" id="name" @bind="MyOrder.Name" />
+    </div>
+    <div class="form-group">
+        @foreach (var drink in MyOrder.Drinks)
+        {
+            <div>@drink.Name</div>
+        }
+    </div>
+
+    <button @onclick="ClearCart" class="btn btn-primary">Clear Cart</button>
+    <button @onclick="HandleSubmit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+
+@code {
+
+    private Order MyOrder { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        MyOrder = cartService.GetOrder();
+        return base.OnInitializedAsync();
+    }
+
+    private void ClearCart()
+    {
+        cartService.ClearCart();
+    }
+
+    private async Task HandleSubmit()
+    {
+        await cartService.SubmitOrder();
+        navigationManager.NavigateTo("index");
+    }
+}

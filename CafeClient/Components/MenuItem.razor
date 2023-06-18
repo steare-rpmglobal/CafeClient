@@ -1,17 +1,25 @@
-﻿@using CafeClient.Models
+﻿@using CafeCommon.Models
+@using Microsoft.AspNetCore.Mvc
+@using CafeClient.Services
+@inject CartService cartService
 
 <link href="css/index.css" rel="stylesheet" />
 
 <div class="card border-dark text-center" style="width: 18rem;">
-    <img src="@Product.ImageUrl" alt="@Product.Title" class="card-img-top img-thumbnail img-fluid" />
+    <img src="@DrinkOrder.ImageUrl" alt="@DrinkOrder.Name" class="card-img-top img-thumbnail img-fluid" />
     <div class="card-body">
-        <h5 class="card-title">@Product.Title</h5>
-        <button class="btn btn-primary">Add to Cart</button>
+        <h5 class="card-title">@DrinkOrder.Name</h5>
+        <button type="button" class="btn btn-primary" @onclick="AddToCart">Add to Cart</button>
     </div>
 </div>
 
 @code {
 
     [Parameter]
-    public Item Product { get; set; }
+    public Drink DrinkOrder { get; set; }
+
+    public void AddToCart()
+    {
+        cartService.AddToCart(DrinkOrder);
+    }
 }

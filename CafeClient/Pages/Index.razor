@@ -1,8 +1,9 @@
-﻿@page "/"
+﻿@page "/index"
 @using CafeClient.Components
-@using CafeClient.Models
 @using CafeClient.Services
+@using CafeCommon.Models
 @inject MenuService _menuService
+@inject Order MyOrder;
 
 <PageTitle>My Cafe</PageTitle>
 
@@ -10,10 +11,10 @@
 
 
 <div class="card-group">
-    @foreach (var item in items)
+    @foreach (var drink in drinks)
     {
         <div class="m-3">
-            <MenuItem Product="item" />
+            <MenuItem DrinkOrder="drink" />
         </div>
     }
 </div>
@@ -22,9 +23,9 @@
 
     protected override void OnInitialized()
     {
-        items = _menuService.GetMenuItems();
+        drinks = _menuService.GetMenuItems();
         base.OnInitialized();
     }
 
-    private List<Item> items = new List<Item>();
+    private List<Drink> drinks = new List<Drink>();
 }
